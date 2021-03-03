@@ -1,0 +1,58 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>A to Z Home services</title>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'filess/admin/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'filess/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'filess/admin/dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="login"><b>ADMIN</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Login Now</legend>
+                {{form|crispy}}
+            </fieldset>
+            <div>
+                <button value="submit" class="btn btn-info">Sign In</button>
+            </div>
+        </form>
+
+        <p><a href="../index">Back Home!!</a></p>
+
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="{% static 'filess/admin/plugins/jquery/jquery.min.js' %}'"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'filess/admin/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'filess/admin/dist/js/adminlte.min.js' %}"></script>
+
+</body>
+</html>

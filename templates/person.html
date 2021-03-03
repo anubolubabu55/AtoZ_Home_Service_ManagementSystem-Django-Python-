@@ -1,0 +1,64 @@
+{% extends 'basic.html' %}
+{% block contents %}
+    {% load static %}
+	<!-- banner -->
+
+        {% if request.user.is_superuser %}
+                <h1>You are not allowed to use this credentials to book Service</h1>
+        {% else %}
+
+        <style>
+			 table {
+				  border-collapse: collapse;
+				  border-spacing: 2;
+				  width: 100%;
+				  border: 1px solid #ddd;
+					 }
+    			th, td {
+				  text-align: center;
+				  padding: 12px;
+						 }
+				tr:nth-child(even){background-color: #f2f2f2}
+		</style>
+    <div class="container-fluid" style="height:400px">
+        <div class="row">
+            <a href="logout" align="right">
+                <h3 class="btn btn-primary" align="right">logout</h3>
+            </a>
+        </div>
+            <br>
+        <table border="1" class="container-fluid" >
+		    <tr>
+               <h2>
+                  <p align="center" class="text-info">
+                      <b><font color="blue" >Welcome &nbsp;&nbsp;&nbsp;&nbsp;
+			      </p></h2></tr>
+				<tr>
+                    <th>Booking id</th>
+                    </th><th>Partner id</th>
+                    <th> Service </th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+   				<tr>{% for lis in book %}
+					<td>BID000035{{ lis.id }}</td>
+					<td>PID00035{{ lis.partner_id }}</td>
+					<td>{{ lis.customer_name }}</td>
+					<td>{{ lis.customer_ph }}</td>
+					<td>{{ lis.booking_status }}</td>
+					<td><a href="{% url 'cancel' id=lis.id %}">
+					    	<button class="btn btn-danger"> Cancel Booking</button>
+                        </a>
+                        <a href="{% url 'feedback' id=lis.id %}">
+                            <button class="btn btn-success"> Feedback</button>
+                        </a></td>';
+                </tr>
+            {% endfor %}
+			</table>
+         </div>
+        {% endif %}
+
+{% endblock %}
+

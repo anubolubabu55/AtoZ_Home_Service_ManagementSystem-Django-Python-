@@ -1,0 +1,13 @@
+
+{% load crispy_forms_tags %}
+{% block contents %}
+<div style="margin-top:8%">
+    <div class="contanier bg-gray">
+
+        <h2>You are loged out Sucessfully</h2>
+        <small class="text-muted">
+            You want to login Again!!!  <a href="{% url 'login' %}">Log in</a>
+        </small>
+    </div>
+</div>
+    {% endblock %}

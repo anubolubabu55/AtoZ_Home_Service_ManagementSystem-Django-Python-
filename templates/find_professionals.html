@@ -1,0 +1,91 @@
+{% extends 'basic.html' %}
+{% block contents %}
+
+    {% load static %}
+{% load crispy_forms_tags %}
+
+<h2 class="text-center" style="margin-top: 20px">Home Services</h2>
+<hr>
+<div class="container">
+    <form action="{% url 'find_professionals' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="city">
+        <input type="text" name="category" placeholder="Category">
+        <input type="submit" value="Serach">
+    </form>
+</div>
+    <div class="table-responsive">
+        <table id="providers" class="table">
+            <thead>
+                <tr>
+                    <th>Partner Id</th>
+                    <th>Photo</th>
+
+                    <th>Address</th>
+                    <th>Profession</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ partner.user_id }}</td>
+                    <td>{{ partner.partner_image }}</td>
+                    <td>{{ partner.partner_address }}</td>
+                    <td>{{ partner.partner_category }}</td>
+                    {% if request.user.is_authenticated %}
+
+                    <td><a href="{% url 'book' id=partner.user_id %}"
+                                                    class="btn btn-success">
+                        Book</a> </td>
+                    {% endif %}
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script>
+    $(function() {
+        $("#search").click(function() {
+            var city = $("#city").val();
+            var profession = $("#profession").val();
+
+            if (city == "none" || profession == "none") {
+                alert("Don't leave fields empty!");
+                tbody = "<tr><td colspan='5'>please </td></tr>";
+            } else {
+                $.post('scripts/searchproviders.php', {
+                    city: city,
+                    profession: profession
+                }, function(res) {
+                    var providers = JSON.parse(res);
+                    var tbody = "";
+
+                    if (providers.failed == true) {
+                        tbody = "<tr><td colspan='5'>No Service Providers found...</td></tr>";
+                    } else {
+                        providers.forEach(function(provider, i) {
+                            tbody += "<tr>" +
+                                "<td><img style='height:150px' src='images/" + provider
+                                .photo +
+                                "'/></td>" +
+                                "<td>" + provider.name + "</td>" +
+                                "<td>" + provider.adder1 + ",<br>" + provider.adder2 +
+                                ",<br>" +
+                                provider.city + "</td>" +
+                                "<td>" + provider.profession + "</td>" +
+                                "<td><a href='booking.php?provider=" + provider.id +
+                                "' class='btn btn-primary btn-block'>Book</a></td>";
+                        });
+                    }
+                    $("#providers tbody").html(tbody);
+                });
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}

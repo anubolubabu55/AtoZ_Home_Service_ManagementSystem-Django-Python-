@@ -1,0 +1,24 @@
+{% extends 'basic.html' %}
+{% load crispy_forms_tags %}
+{% block contents %}
+    <div class="contanier bg-gray">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend class="container" align="center">Join Now</legend>
+                {{form|crispy}}
+
+            </fieldset>
+            <div>
+                <button value="submit" class="btn btn-info">Sign Up</button>
+            </div>
+        </form>
+        <div>
+            <small class="text-muted">
+                Already Have an Account ?
+                <a class="btn btn-info" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+
+{% endblock %}
